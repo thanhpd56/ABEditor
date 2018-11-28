@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "jquery": "2.2.4",
+    "jquery-ui": "1.10.5",
+    "post-robot": "^9.0.16",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-scripts": "2.1.1"
