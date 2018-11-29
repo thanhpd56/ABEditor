@@ -4,6 +4,7 @@
     <list default="true" id="957494ca-a924-44d4-98cc-e04341afb8ff" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/editor/ABEditor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/editor/ABEditor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/editor/Menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/editor/Menu.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,31 +19,8 @@
       <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="17" selection-start-line="17" selection-end-line="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="actionBuilder.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/editor/css/actionBuilder.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="79798">
-              <caret line="4694" column="21" selection-start-line="4694" selection-start-column="1" selection-end-line="4694" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="App.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/App.css">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="27" column="21" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
+            <state relative-caret-position="102">
+              <caret line="10" column="15" lean-forward="true" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -50,8 +28,8 @@
       <file leaf-file-name="ABEditor.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/editor/ABEditor.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="193">
-              <caret line="240" column="39" selection-start-line="240" selection-start-column="39" selection-end-line="240" selection-end-column="39" />
+            <state relative-caret-position="217">
+              <caret line="31" column="53" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="53" />
               <folding>
                 <element signature="e#9#47#0" expanded="true" />
               </folding>
@@ -62,8 +40,8 @@
       <file leaf-file-name="Menu.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/editor/Menu.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="850">
-              <caret line="50" column="16" selection-start-line="50" selection-start-column="16" selection-end-line="50" selection-end-column="16" />
+            <state relative-caret-position="74">
+              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
             </state>
           </provider>
         </entry>
@@ -223,7 +201,7 @@
       <updated>1543375317221</updated>
       <workItem from="1543375333099" duration="5464000" />
       <workItem from="1543454517616" duration="10886000" />
-      <workItem from="1543465972548" duration="5131000" />
+      <workItem from="1543465972548" duration="6744000" />
     </task>
     <task id="LOCAL-00001" summary="init project">
       <created>1543402560334</created>
@@ -260,11 +238,25 @@
       <option name="project" value="LOCAL" />
       <updated>1543476022884</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="fix: modal">
+      <created>1543476769126</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1543476769126</updated>
+    </task>
+    <task id="LOCAL-00007" summary="fix: click handlers">
+      <created>1543477071890</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1543477071890</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21481000" />
+    <option name="totallyTimeSpent" value="23094000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1056" extended-state="0" />
@@ -354,7 +346,9 @@
     <MESSAGE value="fix: menu title" />
     <MESSAGE value="add: edit text" />
     <MESSAGE value="fix: menu options" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: menu options" />
+    <MESSAGE value="fix: modal" />
+    <MESSAGE value="fix: click handlers" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: click handlers" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/App.js">
@@ -433,23 +427,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="27" column="21" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/editor/css/actionBuilder.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="79798">
-          <caret line="4694" column="21" selection-start-line="4694" selection-start-column="1" selection-end-line="4694" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/editor/elementSelectorHandler.js" />
     <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/modal/Modal.d.ts">
       <provider selected="true" editor-type-id="text-editor">
@@ -465,24 +442,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="27" column="21" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/editor/css/actionBuilder.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="4694" column="21" selection-start-line="4694" selection-start-column="1" selection-end-line="4694" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        <state relative-caret-position="102">
+          <caret line="10" column="15" lean-forward="true" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/editor/Menu.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="50" column="16" selection-start-line="50" selection-start-column="16" selection-end-line="50" selection-end-column="16" />
+        <state relative-caret-position="74">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/editor/ABEditor.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="240" column="39" selection-start-line="240" selection-start-column="39" selection-end-line="240" selection-end-column="39" />
+        <state relative-caret-position="217">
+          <caret line="31" column="53" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="53" />
           <folding>
             <element signature="e#9#47#0" expanded="true" />
           </folding>

@@ -63,11 +63,11 @@ export default class ABEditor extends React.Component<Props, State> {
         };
     }
 
-    handleEditTextChange = (e) => {
-        const value = e.target.value;
+    handleFormChange = (e) => {
+        const {name, value} = e.target;
         this.setState({
-            editText: value,
-        });
+            [name]: value,
+        })
     };
 
     onOverlayClick = () => {
@@ -201,6 +201,7 @@ export default class ABEditor extends React.Component<Props, State> {
                         onMoveMenuClick={this.moveElement}
                         onRemoveMenuClick={this.removeElement}
                         onEditTextMenuClick={this.editTextElement}
+                        onEditImageMenuClick={this.editImageElement}
                         top={this.state.menuPositionTop}
                         left={this.state.menuPositionLeft}
                         title={this.state.menuTitle}
@@ -227,9 +228,15 @@ export default class ABEditor extends React.Component<Props, State> {
     }
 
     getModalBody() {
-        switch (this.state.modalMode){
+        const state = this.state;
+        switch (state.modalMode){
             case modalMode.editText:
-                return <TextArea value={this.state.editText} onChange={this.handleEditTextChange} rows={4}/>;
+                return <TextArea value={state.editText} name="editText" onChange={this.handleFormChange} rows={4}/>;
+            case modalMode.editImage:
+                return <div>
+                    <h4>Image Hyperlink:</h4>
+                    <Input type="text" name="imageLink" onChange={this.handleFormChange} value={state.imageLink}/>
+                </div>;
             default:
                 return false;
 
@@ -244,7 +251,33 @@ export default class ABEditor extends React.Component<Props, State> {
         });
     };
 
+    editImageElement = () => {
+        this.setState({
+            modalVisible: true,
+            imageLink: this.state.selectedElement.imgSrc,
+            modalMode: modalMode.editImage,
+        });
+    };
+
     handleOk = () => {
+        switch (this.state.modalMode) {
+            case modalMode.editText:
+                this.saveEditText();
+                return;
+            case modalMode.editImage:
+                this.setState({
+                    modalVisible: false,
+                    imageLink: ''
+                });
+
+                this.setChange({
+                    type: 'changedImage',
+                    src: this.state.imageLink,
+                });
+        }
+    };
+
+    saveEditText() {
         this.setState({
             modalVisible: false,
             editText: ''
@@ -252,9 +285,10 @@ export default class ABEditor extends React.Component<Props, State> {
 
         this.setChange({
             type: 'changedText',
-            html: this.state.editText   ,
-    })
-    };
+            html: this.state.editText,
+        });
+    }
+
     handleCancel = () => {
         this.setState({
             modalVisible: false,
