@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "antd": "^3.10.9",
     "jquery": "2.2.4",
     "jquery-ui": "1.10.5",
     "post-robot": "^9.0.16",

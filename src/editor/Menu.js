@@ -5,6 +5,7 @@ type Props = {
     onCloseMenuClick: Function,
     onMoveMenuClick: Function,
     onRemoveMenuClick: Function,
+    onEditTextMenuClick: Function,
     top: number,
     left: number,
     title: string,
@@ -22,7 +23,7 @@ export default class Menu extends React.Component<Props>{
                         <div/>
                     </div>
                     <div className="subMenu">
-                        <span className="subMenuText edit-text">Edit Text</span>
+                        <span className="subMenuText edit-text" onClick={this.props.onEditTextMenuClick}>Edit Text</span>
                         <span className="subMenuText edit-attr">Edit Attribute</span>
                         <span className="subMenuText change-image">Edit Image</span>
                         <span className="subMenuText edit-hyper-link">Edit Hyperlink</span>
@@ -40,9 +41,9 @@ export default class Menu extends React.Component<Props>{
                     </div>
                 </li>
                 <li className="edit-style">Edit Style</li>
-                <li className="element-move" onClick={this.props.onMoveMenuClick}>Move/Resize</li>
+                <li className="element-move" >Move/Resize</li>
                 <li className="element-rearrange">Rearrange Element</li>
-                <li className="element-remove" onClick={this.props.onRemoveMenuClick}>Remove Element</li>
+                <li className="element-remove">Remove Element</li>
                 <li id="element-children" className="subContent">
                     <span>Select Child</span>
                     <div className="arrow">
@@ -61,5 +62,4 @@ export default class Menu extends React.Component<Props>{
             </div>
         );
     }
-
 }

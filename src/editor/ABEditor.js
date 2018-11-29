@@ -5,7 +5,9 @@ import pm from 'post-robot';
 import './css/actionBuilder.css';
 import './css/elementHandler.css';
 import Menu from './Menu';
-import Draggable from 'react-draggable';
+import {Input, Modal} from 'antd';
+
+const {TextArea} = Input;
 
 type Props = {}
 
@@ -34,7 +36,6 @@ export default class ABEditor extends React.Component<Props, State> {
     };
 
     pmTarget = null;
-
     constructor(props) {
         super(props);
         $(document).ready(() => {
@@ -51,9 +52,18 @@ export default class ABEditor extends React.Component<Props, State> {
             menuPositionLeft: 0,
             customizationList: [],
             menuTitle: '',
-
+            modalVisible: false,
+            editText: '',
+            selectedElement: {},
         };
     }
+
+    handleEditTextChange = (e) => {
+        const value = e.target.value;
+        this.setState({
+            editText: value,
+        });
+    };
 
     onOverlayClick = () => {
         this.closeElementMenu();
@@ -66,7 +76,6 @@ export default class ABEditor extends React.Component<Props, State> {
         });
 
         pm.on('setCustomMenu', event => {
-            console.log('show menu');
             const selectedElement = event.data;
             this.setCustomMenu(selectedElement);
         });
@@ -147,17 +156,25 @@ export default class ABEditor extends React.Component<Props, State> {
 
         pm.send(this.pmTarget, setting.function, customization).then(data => {
             if (changeType === 'new') {
-                this.state.customizationList.push(data);
+                let list = this.state.customizationList.slice();
+                list.push(data);
+                this.setState({
+                    customizationList: list
+                });
             }
             else if (changeType === 'update') {
-                this.state.customizationList[customIndex] = data;
+                let list = this.state.customizationList.slice();
+                list[customIndex] = data;
+                this.setState({
+                    customizationList: list
+                });
             }
 
             if (typeof setting.closeMenu === 'undefined' || setting.closeMenu === true) {
                 this.closeElementMenu();
             }
         }).catch(err => {
-            console.log('that bai roi');
+            console.log('that bai roi', err);
 
         });
 
@@ -191,25 +208,56 @@ export default class ABEditor extends React.Component<Props, State> {
 
 
     render() {
-        console.log(this.state.showOverlay);
         return (
             <Fragment>
                 <div onClick={this.onOverlayClick}>
-                    {this.state.showMenu && <Draggable>
-                        <Menu
-                            onCloseMenuClick={this.closeElementMenu}
-                            onMoveMenuClick={this.moveElement}
-                            onRemoveMenuClick={this.removeElement}
-                            top={this.state.menuPositionTop}
-                            left={this.state.menuPositionLeft}
-                            title={this.state.menuTitle}
-                        />
-                    </Draggable>}
+                    {this.state.showMenu && <Menu
+                        onCloseMenuClick={this.closeElementMenu}
+                        onMoveMenuClick={this.moveElement}
+                        onRemoveMenuClick={this.removeElement}
+                        onEditTextMenuClick={this.editTextElement}
+                        top={this.state.menuPositionTop}
+                        left={this.state.menuPositionLeft}
+                        title={this.state.menuTitle}
+                    />}
                     {this.state.showOverlay && <div id="selectElementOverlay"/>}
                     <iframe id="edit-frame" src="http://localhost:3000" style={{width: '100%', height: '850px'}}/>
+
                 </div>
+                <Modal
+                    title="Edit text"
+                    visible={this.state.modalVisible}
+                    onOk={this.handleOk}
+                    onCancel={this.handleCancel}
+                >
+                    <TextArea value={this.state.editText} onChange={this.handleEditTextChange} rows={4}/>
+                </Modal>
             </Fragment>
         );
     }
 
+    editTextElement = () => {
+        this.setState({
+            modalVisible: true,
+            editText: this.state.selectedElement.html,
+        });
+    };
+
+    handleOk = () => {
+        this.setState({
+            modalVisible: false,
+            editText: ''
+        });
+
+        this.setChange({
+            type: 'changedText',
+            html: this.state.editText   ,
+    })
+    };
+    handleCancel = () => {
+        this.setState({
+            modalVisible: false,
+            editText: ''
+        });
+    };
 }
