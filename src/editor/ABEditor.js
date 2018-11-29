@@ -50,6 +50,7 @@ export default class ABEditor extends React.Component<Props, State> {
             menuPositionTop: 0,
             menuPositionLeft: 0,
             customizationList: [],
+            menuTitle: '',
 
         };
     }
@@ -80,13 +81,13 @@ export default class ABEditor extends React.Component<Props, State> {
     };
 
     setCustomMenu = (data) => {
-        console.log('show menu');
         const {x, y} = data.position;
         const {top, left} = data.offset;
         this.setState({
             showMenu: true,
             menuPositionTop: top - x,
             menuPositionLeft: left - y,
+            menuTitle: data.tagName,
         });
     };
 
@@ -201,6 +202,7 @@ export default class ABEditor extends React.Component<Props, State> {
                             onRemoveMenuClick={this.removeElement}
                             top={this.state.menuPositionTop}
                             left={this.state.menuPositionLeft}
+                            title={this.state.menuTitle}
                         />
                     </Draggable>}
                     {this.state.showOverlay && <div id="selectElementOverlay"/>}

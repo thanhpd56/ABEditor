@@ -7,13 +7,14 @@ type Props = {
     onRemoveMenuClick: Function,
     top: number,
     left: number,
+    title: string,
 }
 
 export default class Menu extends React.Component<Props>{
     render() {
         return (
             <div id="select-element-menu" style={{top: this.props.top, left: this.props.left}}>
-                <h1 className="select-element-menu-handle" id="element-tagName"/>
+                <h1 className="select-element-menu-handle" id="element-tagName">{this.props.title}</h1>
                 <li className="slider-settings">Slider Settings</li>
                 <li className="edit-element subContent">
                     Edit
