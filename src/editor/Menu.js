@@ -8,6 +8,7 @@ type Props = {
     onEditTextMenuClick: Function,
     onEditImageMenuClick: Function,
     onEditHyperLinkMenuClick: Function,
+    onEditAttrMenuClick: Function,
     top: number,
     left: number,
     title: string,
@@ -21,7 +22,7 @@ export default class Menu extends React.Component<Props>{
 
         return (
             <div id="select-element-menu" style={{top: this.props.top, left: this.props.left}}>
-                <h1 className="select-element-menu-handle" id="element-tagName">{this.props.title}</h1>
+                <h1 className="select-element-menu-handle" id="element-tagName" style={{color: 'white'}}>{this.props.title}</h1>
                 <li className="edit-element subContent">
                     Edit
                     <div className="arrow">
@@ -30,7 +31,7 @@ export default class Menu extends React.Component<Props>{
                     <div className="subMenu">
                         {!!this.shouldShowEditText(data) && <span className="subMenuText edit-text"
                                                                 onClick={this.props.onEditTextMenuClick}>Edit Text</span>}
-                        <span className="subMenuText edit-attr">Edit Attribute</span>
+                        <span className="subMenuText edit-attr" onClick={this.props.onEditAttrMenuClick}>Edit Attribute</span>
                         {!!this.shouldShowEditImage(data) && <span className="subMenuText change-image" onClick={this.props.onEditImageMenuClick}>Edit Image</span>}
                         {!!data.editHyperLink && <span className="subMenuText edit-hyper-link" onClick={this.props.onEditHyperLinkMenuClick}>Edit Hyperlink</span>}
                         {!!data.editHyperLink && <span className="subMenuText make-hyper-link">Add Hyperlink</span>}
@@ -48,7 +49,6 @@ export default class Menu extends React.Component<Props>{
                 </li>
                 <li className="edit-style">Edit Style</li>
                 <li className="element-move" onClick={this.props.onMoveMenuClick} >Move/Resize</li>
-                <li className="element-rearrange">Rearrange Element</li>
                 <li className="element-remove" onClick={this.props.onRemoveMenuClick}>Remove Element</li>
                 <li className="select-element-menu-close" onClick={this.props.onCloseMenuClick}>Close Menu</li>
             </div>

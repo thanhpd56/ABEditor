@@ -5,7 +5,7 @@ import pm from 'post-robot';
 import './css/actionBuilder.css';
 import './css/elementHandler.css';
 import Menu from './Menu';
-import {Checkbox, Input, Modal} from 'antd';
+import {Button, Checkbox, Input, Modal} from 'antd';
 
 const {TextArea} = Input;
 
@@ -17,6 +17,7 @@ const modalMode = {
     editText: 'Edit Text',
     editImage: 'Edit Image',
     editHyperLink: 'Edit HyperLink',
+    editAttr: 'Edit Attribute',
 };
 
 export default class ABEditor extends React.Component<Props, State> {
@@ -71,6 +72,30 @@ export default class ABEditor extends React.Component<Props, State> {
         this.setState({
             [name]: value,
         })
+    };
+
+    addMoreAttr = () => {
+        const attrs = this.state.editAttrs.slice();
+        attrs.push({attr: '', val: ''});
+        this.setState({editAttrs: attrs});
+    };
+
+    removeAttr = (index) => {
+        const attrs = this.state.editAttrs.slice();
+        attrs.splice(index, 1);
+        this.setState({editAttrs: attrs});
+    };
+
+    handleAttrKeyChange = (index, value) => {
+        const attrs = this.state.editAttrs.slice();
+        attrs[index] = {...attrs[index], attr: value};
+        this.setState({editAttrs: attrs});
+    };
+
+    handleAttrValueChange = (index, value) => {
+        const attrs = this.state.editAttrs.slice();
+        attrs[index] = {...attrs[index], val: value};
+        this.setState({editAttrs: attrs});
     };
 
     handleCheckboxNewTabChange = (e) => {
@@ -212,6 +237,7 @@ export default class ABEditor extends React.Component<Props, State> {
                         onEditTextMenuClick={this.editTextElement}
                         onEditImageMenuClick={this.editImageElement}
                         onEditHyperLinkMenuClick={this.editHyperLinkElement}
+                        onEditAttrMenuClick={this.editAttrElement}
                         top={this.state.menuPositionTop}
                         left={this.state.menuPositionLeft}
                         title={this.state.menuTitle}
@@ -253,6 +279,32 @@ export default class ABEditor extends React.Component<Props, State> {
                     <Input type="text" name="editHyperLink" onChange={this.handleFormChange} value={state.editHyperLink}/>
                     <div className="mt-2"><Checkbox onChange={this.handleCheckboxNewTabChange}> Open new tab</Checkbox></div>
                 </div>;
+            case modalMode.editAttr: {
+                console.log(this.state.editAttrs);
+                return <div>
+                    <Button type="primary" onClick={this.addMoreAttr}>Add</Button>
+                    <hr/>
+                    {
+                        this.state.editAttrs.map((attr, index) => {
+                            return <div className="d-flex align-items-center mb-2">
+                                <span className="mr-1">Key:</span> <Input className="mr-1" type="text"
+                                                                          onChange={(e) => {
+                                                                              this.handleAttrKeyChange(index, e.target.value);
+                                                                          }}
+                                                                          value={attr.attr}/>
+                                <span className="mr-1">Value:</span> <Input className="mr-1" type="text"
+                                                                            onChange={(e) => {
+                                                                                this.handleAttrValueChange(index, e.target.value);
+                                                                            }}
+                                                                            value={attr.val}/>
+                                <Button type="danger" onClick={() => {
+                                    this.removeAttr(index);
+                                }}><i className="fas fa-trash-alt"/></Button>
+                            </div>;
+                        })
+                    }
+                </div>;
+            }
             default:
                 return false;
 
@@ -284,15 +336,25 @@ export default class ABEditor extends React.Component<Props, State> {
         });
     };
 
+    editAttrElement = () => {
+        this.setState({
+            modalVisible: true,
+            editAttrs: this.state.selectedElement.attrs,
+            modalMode: modalMode.editAttr,
+        });
+    };
+
     handleOk = () => {
         switch (this.state.modalMode) {
-            case modalMode.editText:
+            case modalMode.editText: {
                 this.saveEditText();
                 break;
-            case modalMode.editImage:
+            }
+            case modalMode.editImage: {
                 this.saveImageLink();
                 break;
-            case modalMode.editHyperLink:
+            }
+            case modalMode.editHyperLink: {
                 this.setState({
                     modalVisible: false,
                     editHyperLink: ''
@@ -305,6 +367,16 @@ export default class ABEditor extends React.Component<Props, State> {
                     newTab: this.state.checkboxNewTab,
                 });
                 break;
+            }
+            case modalMode.editAttr: {
+                const attrs = this.state.editAttrs;
+                if (typeof attrs !== "undefined" && attrs.length > 0) {
+                    this.setChange({
+                        type: 'elementAttr',
+                        attrs
+                    });
+                }
+            }
         }
     };
 
