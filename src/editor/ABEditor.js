@@ -45,7 +45,6 @@ export default class ABEditor extends React.Component<Props, State> {
         super(props);
         $(document).ready(() => {
             this.pmTarget = $('#edit-frame')[0].contentWindow;
-            this.initElements();
             this.setupListeners();
             pm.send(this.pmTarget, 'setEditMode');
         });
@@ -104,26 +103,6 @@ export default class ABEditor extends React.Component<Props, State> {
             menuPositionLeft: left - y,
             menuTitle: data.tagName,
         });
-    };
-
-    initElements = () => {
-        this.clickEvents();
-    };
-    clickEvents = () => {
-        const eventWrapper = $('body');
-
-        eventWrapper.on('click', '.select-element-menu-close', () => {
-            this.closeElementMenu();
-        });
-
-        eventWrapper.on('click', '.element-move', () => {
-            this.moveElement();
-        });
-
-        eventWrapper.on('click', '.element-remove', () => {
-            this.removeElement();
-        });
-
     };
 
     moveElement = () => {
@@ -206,9 +185,9 @@ export default class ABEditor extends React.Component<Props, State> {
     };
 
     removeElement = () => {
+        console.log('remove click');
         const data = {};
         data.type = 'remove';
-
         this.setChange(data);
     };
 

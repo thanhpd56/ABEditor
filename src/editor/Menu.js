@@ -45,9 +45,9 @@ export default class Menu extends React.Component<Props>{
                     </div>
                 </li>
                 <li className="edit-style">Edit Style</li>
-                <li className="element-move" >Move/Resize</li>
+                <li className="element-move" onClick={this.props.onMoveMenuClick} >Move/Resize</li>
                 <li className="element-rearrange">Rearrange Element</li>
-                <li className="element-remove">Remove Element</li>
+                <li className="element-remove" onClick={this.props.onRemoveMenuClick}>Remove Element</li>
                 <li className="select-element-menu-close" onClick={this.props.onCloseMenuClick}>Close Menu</li>
             </div>
         );
