@@ -1,4 +1,4 @@
-@import url(../../../bower/vendor/font-awesome/css/font-awesome.min.css);@import url(http://fonts.googleapis.com/css?family=Roboto:400,700&subset=cyrillic-ext,latin,latin-ext);body.stop-scrolling {
+body.stop-scrolling {
     height: 100%;
     overflow: hidden
 }
@@ -3109,7 +3109,6 @@ input[type=range].resolution-slider:focus::-ms-fill-upper {
     background-color: #30363E;
     position: absolute;
     z-index: 10;
-    display: none
 }
 
 #select-element-menu h1 {
@@ -4705,7 +4704,6 @@ body .mfp-iframe-scaler iframe {
     top: 0px;
     width: 100%;
     z-index: 9;
-    display: none
 }
 
 .random-min-max-values input,.min-impression-count-values input {
