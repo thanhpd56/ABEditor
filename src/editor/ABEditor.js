@@ -13,6 +13,11 @@ type Props = {}
 
 type State = {}
 
+const modalMode = {
+    editText: 'Edit Text',
+    editImage: 'Edit Image',
+};
+
 export default class ABEditor extends React.Component<Props, State> {
 
     camp = {
@@ -55,6 +60,7 @@ export default class ABEditor extends React.Component<Props, State> {
             modalVisible: false,
             editText: '',
             selectedElement: {},
+            modalMode: null,
         };
     }
 
@@ -219,27 +225,43 @@ export default class ABEditor extends React.Component<Props, State> {
                         top={this.state.menuPositionTop}
                         left={this.state.menuPositionLeft}
                         title={this.state.menuTitle}
+                        data={this.state.selectedElement}
                     />}
                     {this.state.showOverlay && <div id="selectElementOverlay"/>}
                     <iframe id="edit-frame" src="http://localhost:3000" style={{width: '100%', height: '850px'}}/>
 
                 </div>
-                <Modal
-                    title="Edit text"
-                    visible={this.state.modalVisible}
-                    onOk={this.handleOk}
-                    onCancel={this.handleCancel}
-                >
-                    <TextArea value={this.state.editText} onChange={this.handleEditTextChange} rows={4}/>
-                </Modal>
+                {this.getModal()}
             </Fragment>
         );
+    }
+
+    getModal() {
+        return <Modal
+            title={this.state.modalMode}
+            visible={this.state.modalVisible}
+            onOk={this.handleOk}
+            onCancel={this.handleCancel}
+        >
+            {this.getModalBody()}
+        </Modal>;
+    }
+
+    getModalBody() {
+        switch (this.state.modalMode){
+            case modalMode.editText:
+                return <TextArea value={this.state.editText} onChange={this.handleEditTextChange} rows={4}/>;
+            default:
+                return false;
+
+        }
     }
 
     editTextElement = () => {
         this.setState({
             modalVisible: true,
             editText: this.state.selectedElement.html,
+            modalMode: modalMode.editText,
         });
     };
 
