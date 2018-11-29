@@ -7,6 +7,7 @@ type Props = {
     onRemoveMenuClick: Function,
     onEditTextMenuClick: Function,
     onEditImageMenuClick: Function,
+    onEditHyperLinkMenuClick: Function,
     top: number,
     left: number,
     title: string,
@@ -31,7 +32,7 @@ export default class Menu extends React.Component<Props>{
                                                                 onClick={this.props.onEditTextMenuClick}>Edit Text</span>}
                         <span className="subMenuText edit-attr">Edit Attribute</span>
                         {!!this.shouldShowEditImage(data) && <span className="subMenuText change-image" onClick={this.props.onEditImageMenuClick}>Edit Image</span>}
-                        {!!data.editHyperLink && <span className="subMenuText edit-hyper-link">Edit Hyperlink</span>}
+                        {!!data.editHyperLink && <span className="subMenuText edit-hyper-link" onClick={this.props.onEditHyperLinkMenuClick}>Edit Hyperlink</span>}
                         {!!data.editHyperLink && <span className="subMenuText make-hyper-link">Add Hyperlink</span>}
                     </div>
                 </li>

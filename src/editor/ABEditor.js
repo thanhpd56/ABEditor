@@ -5,7 +5,7 @@ import pm from 'post-robot';
 import './css/actionBuilder.css';
 import './css/elementHandler.css';
 import Menu from './Menu';
-import {Input, Modal} from 'antd';
+import {Checkbox, Input, Modal} from 'antd';
 
 const {TextArea} = Input;
 
@@ -16,6 +16,7 @@ type State = {}
 const modalMode = {
     editText: 'Edit Text',
     editImage: 'Edit Image',
+    editHyperLink: 'Edit HyperLink',
 };
 
 export default class ABEditor extends React.Component<Props, State> {
@@ -58,6 +59,8 @@ export default class ABEditor extends React.Component<Props, State> {
             menuTitle: '',
             modalVisible: false,
             editText: '',
+            editImageLink: '',
+            editHyperLink: '',
             selectedElement: {},
             modalMode: null,
         };
@@ -68,6 +71,12 @@ export default class ABEditor extends React.Component<Props, State> {
         this.setState({
             [name]: value,
         })
+    };
+
+    handleCheckboxNewTabChange = (e) => {
+        this.setState({
+            checkboxNewTab: e.target.checked,
+        });
     };
 
     onOverlayClick = () => {
@@ -202,6 +211,7 @@ export default class ABEditor extends React.Component<Props, State> {
                         onRemoveMenuClick={this.removeElement}
                         onEditTextMenuClick={this.editTextElement}
                         onEditImageMenuClick={this.editImageElement}
+                        onEditHyperLinkMenuClick={this.editHyperLinkElement}
                         top={this.state.menuPositionTop}
                         left={this.state.menuPositionLeft}
                         title={this.state.menuTitle}
@@ -235,7 +245,13 @@ export default class ABEditor extends React.Component<Props, State> {
             case modalMode.editImage:
                 return <div>
                     <h4>Image Hyperlink:</h4>
-                    <Input type="text" name="imageLink" onChange={this.handleFormChange} value={state.imageLink}/>
+                    <Input type="text" name="editImageLink" onChange={this.handleFormChange} value={state.editImageLink}/>
+                </div>;
+            case modalMode.editHyperLink:
+                return <div>
+                    <h4>Link Url:</h4>
+                    <Input type="text" name="editHyperLink" onChange={this.handleFormChange} value={state.editHyperLink}/>
+                    <div className="mt-2"><Checkbox onChange={this.handleCheckboxNewTabChange}> Open new tab</Checkbox></div>
                 </div>;
             default:
                 return false;
@@ -254,8 +270,17 @@ export default class ABEditor extends React.Component<Props, State> {
     editImageElement = () => {
         this.setState({
             modalVisible: true,
-            imageLink: this.state.selectedElement.imgSrc,
+            editImageLink: this.state.selectedElement.imgSrc,
             modalMode: modalMode.editImage,
+        });
+    };
+
+    editHyperLinkElement = () => {
+        this.setState({
+            modalVisible: true,
+            editHyperLink: this.state.selectedElement.hyperLink,
+            checkboxNewTab: this.state.selectedElement.linkNewTab,
+            modalMode: modalMode.editHyperLink,
         });
     };
 
@@ -263,19 +288,37 @@ export default class ABEditor extends React.Component<Props, State> {
         switch (this.state.modalMode) {
             case modalMode.editText:
                 this.saveEditText();
-                return;
+                break;
             case modalMode.editImage:
+                this.saveImageLink();
+                break;
+            case modalMode.editHyperLink:
                 this.setState({
                     modalVisible: false,
-                    imageLink: ''
+                    editHyperLink: ''
                 });
 
                 this.setChange({
-                    type: 'changedImage',
-                    src: this.state.imageLink,
+                    type: 'editHyperLink',
+                    linkUrl: this.state.editHyperLink,
+                    linkText: this.state.editHyperLink,
+                    newTab: this.state.checkboxNewTab,
                 });
+                break;
         }
     };
+
+    saveImageLink() {
+        this.setState({
+            modalVisible: false,
+            editImageLink: ''
+        });
+
+        this.setChange({
+            type: 'changedImage',
+            src: this.state.editImageLink,
+        });
+    }
 
     saveEditText() {
         this.setState({
