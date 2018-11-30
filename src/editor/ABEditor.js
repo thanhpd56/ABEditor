@@ -26,6 +26,9 @@ const modalMode = {
     editStyle: 'Edit Style',
 };
 
+const modeInteractive = 'interactive';
+const modeEdit = 'edit';
+
 export default class ABEditor extends React.Component<Props, State> {
 
     camp = {
@@ -307,6 +310,7 @@ export default class ABEditor extends React.Component<Props, State> {
             editStyle: {},
             selectedElement: {},
             modalMode: null,
+            mode: modeEdit,
         };
     }
 
@@ -498,6 +502,16 @@ export default class ABEditor extends React.Component<Props, State> {
                         data={this.state.selectedElement}
                     />}
                     {this.state.showOverlay && <div id="selectElementOverlay"/>}
+                    <div className="w-100 bg-dark p-2">
+                        <Button ghost={this.state.mode !== modeEdit} type="primary" className="mx-3"
+                                onClick={this.turnEditMode}><i
+                            className="fas fa-pencil-alt mr-1"/> Edit Mode</Button>
+                        <Button ghost={this.state.mode !== modeInteractive} type="primary" className="mx-3"
+                                onClick={this.turnInteractiveMode}><i
+                            className="fas fa-mouse-pointer mr-1"/> Interactive Mode</Button>
+                        <Button ghost className="mx-3"><i className="fab fa-js  mr-1"/> Javascript</Button>
+                        <Button ghost className="mx-3"><i className="fab fa-css3-alt  mr-1"/> Css</Button>
+                    </div>
                     <iframe id="edit-frame" src="http://localhost:3000" style={{width: '100%', height: '850px'}}/>
 
                 </div>
@@ -698,6 +712,22 @@ export default class ABEditor extends React.Component<Props, State> {
             modalVisible: true,
             modalMode: modalMode.editStyle,
             editStyle: this.state.selectedElement.cssSettings
+        });
+    };
+
+    turnEditMode = () => {
+        pm.send(this.pmTarget, 'setEditMode');
+        this.setState({
+            mode: modeEdit,
+        });
+    };
+
+    turnInteractiveMode = () => {
+        this.removeOverlay();
+        this.removeMenu();
+        pm.send(this.pmTarget, 'setInteractiveMode');
+        this.setState({
+            mode: modeInteractive,
         });
     };
 
