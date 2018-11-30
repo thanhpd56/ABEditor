@@ -590,7 +590,7 @@ export default class ABEditor extends React.Component<Props, State> {
                 </div>;
             }
             case modalMode.editStyle: {
-                return <Tabs defaultActiveKey="1">
+                return <Tabs defaultActiveKey="0">
 
                     {Object.keys(this.cssSettings).map((key, index) => {
                         const attrs = this.cssSettings[key];
