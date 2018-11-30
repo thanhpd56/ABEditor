@@ -11,6 +11,7 @@ type Props = {
     onEditAttrMenuClick: Function,
     onAddHTMLMenuClick: Function,
     onInsertImageMenuClick: Function,
+    onEditStyleMenuClick: Function,
     top: number,
     left: number,
     title: string,
@@ -49,7 +50,7 @@ export default class Menu extends React.Component<Props>{
                         <span className="subMenuText insert-image" onClick={this.props.onInsertImageMenuClick}>Add Image</span>
                     </div>
                 </li>
-                <li className="edit-style">Edit Style</li>
+                <li className="edit-style" onClick={this.props.onEditStyleMenuClick}>Edit Style</li>
                 <li className="element-move" onClick={this.props.onMoveMenuClick} >Move/Resize</li>
                 <li className="element-remove" onClick={this.props.onRemoveMenuClick}>Remove Element</li>
                 <li className="select-element-menu-close" onClick={this.props.onCloseMenuClick}>Close Menu</li>
