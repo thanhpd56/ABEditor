@@ -9,6 +9,7 @@ type Props = {
     onEditImageMenuClick: Function,
     onEditHyperLinkMenuClick: Function,
     onEditAttrMenuClick: Function,
+    onAddHTMLMenuClick: Function,
     top: number,
     left: number,
     title: string,
@@ -43,7 +44,7 @@ export default class Menu extends React.Component<Props>{
                         <div/>
                     </div>
                     <div className="subMenu">
-                        <span className="subMenuText insert-html">Add HTML</span>
+                        <span className="subMenuText insert-html" onClick={this.props.onAddHTMLMenuClick}>Add HTML</span>
                         <span className="subMenuText insert-image">Add Image</span>
                     </div>
                 </li>

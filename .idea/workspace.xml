@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="957494ca-a924-44d4-98cc-e04341afb8ff" name="Default" comment="add: edit attr">
+    <list default="true" id="957494ca-a924-44d4-98cc-e04341afb8ff" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/editor/ABEditor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/editor/ABEditor.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/editor/Menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/editor/Menu.js" afterDir="false" />
     </list>
@@ -29,11 +28,29 @@
       <file leaf-file-name="ABEditor.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/editor/ABEditor.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="372" column="37" selection-start-line="372" selection-start-column="37" selection-end-line="372" selection-end-column="37" />
+            <state relative-caret-position="312">
+              <caret line="420" column="19" lean-forward="true" selection-start-line="420" selection-start-column="19" selection-end-line="420" selection-end-column="19" />
               <folding>
                 <element signature="e#9#47#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="radio.d.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/radio/radio.d.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="6" column="11" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="group.d.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/radio/group.d.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -42,7 +59,7 @@
         <entry file="file://$PROJECT_DIR$/public/index.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
-              <caret line="15" column="8" lean-forward="true" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+              <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -50,8 +67,8 @@
       <file leaf-file-name="Menu.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/editor/Menu.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="35">
-              <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
+            <state relative-caret-position="17">
+              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
             </state>
           </provider>
         </entry>
@@ -91,8 +108,8 @@
         <option value="$PROJECT_DIR$/src/editor/css/actionBuilder.css" />
         <option value="$PROJECT_DIR$/src/editor/elementSelectorHandler.js" />
         <option value="$PROJECT_DIR$/src/App.js" />
-        <option value="$PROJECT_DIR$/src/editor/Menu.js" />
         <option value="$PROJECT_DIR$/public/index.html" />
+        <option value="$PROJECT_DIR$/src/editor/Menu.js" />
         <option value="$PROJECT_DIR$/src/editor/ABEditor.js" />
       </list>
     </option>
@@ -110,6 +127,9 @@
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths>
@@ -217,7 +237,8 @@
       <updated>1543375317221</updated>
       <workItem from="1543375333099" duration="5464000" />
       <workItem from="1543454517616" duration="10886000" />
-      <workItem from="1543465972548" duration="15662000" />
+      <workItem from="1543465972548" duration="15736000" />
+      <workItem from="1543539154070" duration="3991000" />
     </task>
     <task id="LOCAL-00001" summary="init project">
       <created>1543402560334</created>
@@ -282,11 +303,18 @@
       <option name="project" value="LOCAL" />
       <updated>1543480698703</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="add: edit attr">
+      <created>1543491515148</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1543491515148</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32012000" />
+    <option name="totallyTimeSpent" value="36077000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1056" extended-state="0" />
@@ -297,7 +325,7 @@
       <window_info anchor="right" id="Maven Projects" order="9" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info id="Capture Tool" order="8" />
-      <window_info anchor="bottom" id="TypeScript" />
+      <window_info anchor="bottom" id="TypeScript" order="13" />
       <window_info id="Designer" order="2" />
       <window_info anchor="bottom" id="Docker" order="8" />
       <window_info anchor="bottom" id="Tail" order="11" />
@@ -310,12 +338,11 @@
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info id="Image Layers" order="3" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="10" visible="true" weight="0.29847494" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.29847494" />
       <window_info id="npm" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.1633987" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.36710238" />
       <window_info content_ui="combo" id="Project" order="0" weight="0.13486141" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3006536" />
       <window_info id="Learn" order="6" />
       <window_info anchor="right" id="SciView" order="6" />
       <window_info anchor="right" id="Theme Preview" order="8" />
@@ -323,17 +350,17 @@
       <window_info anchor="bottom" id="Messages" order="13" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3006536" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
     </layout>
     <layout-to-restore>
       <window_info id="Designer" order="2" />
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Run" order="3" />
       <window_info id="Image Layers" order="3" />
       <window_info anchor="bottom" id="TypeScript" order="0" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="bottom" id="Run" order="3" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="Capture Tool" order="8" />
@@ -342,15 +369,16 @@
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.1633987" />
       <window_info anchor="bottom" id="Docker" order="9" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="bottom" id="Event Log" order="13" side_tool="true" />
       <window_info id="Learn" order="6" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Database" order="5" />
+      <window_info anchor="bottom" id="Tail" order="12" />
       <window_info id="npm" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="10" />
       <window_info active="true" anchor="bottom" id="Version Control" order="11" visible="true" weight="0.29847494" />
       <window_info anchor="right" id="Maven Projects" order="9" />
-      <window_info anchor="bottom" id="Find" order="2" weight="0.3006536" />
       <window_info content_ui="combo" id="Project" order="0" weight="0.13486141" />
       <window_info anchor="right" id="SciView" order="6" />
       <window_info anchor="bottom" id="Messages" order="14" />
@@ -360,7 +388,7 @@
       <window_info anchor="right" id="Theme Preview" order="8" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
-      <window_info anchor="bottom" id="Tail" order="12" />
+      <window_info anchor="bottom" id="Find" order="2" weight="0.3006536" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
     </layout-to-restore>
   </component>
@@ -380,9 +408,41 @@
     <MESSAGE value="fix: click handlers" />
     <MESSAGE value="add: handle change image" />
     <MESSAGE value="add: handle edit hyperlink" />
-    <option name="LAST_COMMIT_MESSAGE" value="add: handle edit hyperlink" />
+    <MESSAGE value="add: edit attr" />
+    <option name="LAST_COMMIT_MESSAGE" value="add: edit attr" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="10" column="15" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="8" lean-forward="true" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/editor/Menu.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/editor/ABEditor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6222">
+          <caret line="372" column="37" selection-start-line="372" selection-start-column="37" selection-end-line="372" selection-end-column="37" />
+          <folding>
+            <element signature="e#9#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -501,21 +561,35 @@
     <entry file="file://$PROJECT_DIR$/public/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
-          <caret line="15" column="8" lean-forward="true" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+          <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/editor/Menu.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="35">
-          <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
+        <state relative-caret-position="17">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/radio/group.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/radio/radio.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="6" column="11" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/editor/ABEditor.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="372" column="37" selection-start-line="372" selection-start-column="37" selection-end-line="372" selection-end-column="37" />
+        <state relative-caret-position="312">
+          <caret line="420" column="19" lean-forward="true" selection-start-line="420" selection-start-column="19" selection-end-line="420" selection-end-column="19" />
           <folding>
             <element signature="e#9#47#0" expanded="true" />
           </folding>

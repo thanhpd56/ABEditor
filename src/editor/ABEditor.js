@@ -5,9 +5,10 @@ import pm from 'post-robot';
 import './css/actionBuilder.css';
 import './css/elementHandler.css';
 import Menu from './Menu';
-import {Button, Checkbox, Input, Modal} from 'antd';
+import {Button, Checkbox, Input, Modal, Radio} from 'antd';
 
 const {TextArea} = Input;
+const RadioGroup = Radio.Group;
 
 type Props = {}
 
@@ -18,6 +19,7 @@ const modalMode = {
     editImage: 'Edit Image',
     editHyperLink: 'Edit HyperLink',
     editAttr: 'Edit Attribute',
+    addHtml: 'Add HTML',
 };
 
 export default class ABEditor extends React.Component<Props, State> {
@@ -62,6 +64,8 @@ export default class ABEditor extends React.Component<Props, State> {
             editText: '',
             editImageLink: '',
             editHyperLink: '',
+            editHTML: '',
+            addHtmlPosition: 'elementAfter',
             selectedElement: {},
             modalMode: null,
         };
@@ -238,6 +242,7 @@ export default class ABEditor extends React.Component<Props, State> {
                         onEditImageMenuClick={this.editImageElement}
                         onEditHyperLinkMenuClick={this.editHyperLinkElement}
                         onEditAttrMenuClick={this.editAttrElement}
+                        onAddHTMLMenuClick={this.addHTMLElement}
                         top={this.state.menuPositionTop}
                         left={this.state.menuPositionLeft}
                         title={this.state.menuTitle}
@@ -263,6 +268,12 @@ export default class ABEditor extends React.Component<Props, State> {
         </Modal>;
     }
 
+
+    onAddHtmlPositionChange = (e) => {
+        console.log(e);
+    };
+
+
     getModalBody() {
         const state = this.state;
         switch (state.modalMode){
@@ -280,7 +291,6 @@ export default class ABEditor extends React.Component<Props, State> {
                     <div className="mt-2"><Checkbox onChange={this.handleCheckboxNewTabChange}> Open new tab</Checkbox></div>
                 </div>;
             case modalMode.editAttr: {
-                console.log(this.state.editAttrs);
                 return <div>
                     <Button type="primary" onClick={this.addMoreAttr}>Add</Button>
                     <hr/>
@@ -303,6 +313,19 @@ export default class ABEditor extends React.Component<Props, State> {
                             </div>;
                         })
                     }
+                </div>;
+            }
+            case modalMode.addHtml: {
+                return <div>
+                    <TextArea value={state.editHTML} name="editHTML" onChange={this.handleFormChange} rows={8}/>
+                    <hr/>
+                    <RadioGroup onChange={this.handleFormChange} name="addHtmlPosition"
+                                value={this.state.addHtmlPosition}>
+                        <Radio value="after">Insert After</Radio>
+                        <Radio value="before">Insert Before</Radio>
+                        <Radio value="append">Insert to the End</Radio>
+                        <Radio value="prepend">Insert to the Beginning</Radio>
+                    </RadioGroup>
                 </div>;
             }
             default:
@@ -344,6 +367,14 @@ export default class ABEditor extends React.Component<Props, State> {
         });
     };
 
+    addHTMLElement = () => {
+        this.setState({
+            modalVisible: true,
+            editHTML: '',
+            modalMode: modalMode.addHtml,
+        });
+    };
+
     handleOk = () => {
         switch (this.state.modalMode) {
             case modalMode.editText: {
@@ -369,14 +400,27 @@ export default class ABEditor extends React.Component<Props, State> {
                 break;
             }
             case modalMode.editAttr: {
-                const attrs = this.state.editAttrs;
-                if (typeof attrs !== "undefined" && attrs.length > 0) {
-                    this.setChange({
-                        type: 'elementAttr',
-                        attrs
-                    });
-                }
+                this.setState({
+                    modalVisible: false,
+                });
+                this.setChange({
+                    type: 'elementAttr',
+                    attrs: this.state.editAttrs,
+                });
+                break;
             }
+            case modalMode.addHtml: {
+                this.setState({
+                    modalVisible: false,
+                });
+
+                this.setChange({
+                    type: 'insertedHTML',
+                    insertOption: this.state.addHtmlPosition,
+                    html: this.state.editHTML
+                });
+            }
+
         }
     };
 
