@@ -10,6 +10,7 @@ type Props = {
     onEditHyperLinkMenuClick: Function,
     onEditAttrMenuClick: Function,
     onAddHTMLMenuClick: Function,
+    onInsertImageMenuClick: Function,
     top: number,
     left: number,
     title: string,
@@ -34,8 +35,8 @@ export default class Menu extends React.Component<Props>{
                                                                 onClick={this.props.onEditTextMenuClick}>Edit Text</span>}
                         <span className="subMenuText edit-attr" onClick={this.props.onEditAttrMenuClick}>Edit Attribute</span>
                         {!!this.shouldShowEditImage(data) && <span className="subMenuText change-image" onClick={this.props.onEditImageMenuClick}>Edit Image</span>}
-                        {!!data.editHyperLink && <span className="subMenuText edit-hyper-link" onClick={this.props.onEditHyperLinkMenuClick}>Edit Hyperlink</span>}
-                        {!!data.editHyperLink && <span className="subMenuText make-hyper-link">Add Hyperlink</span>}
+                        {!!data.saveEditHyperLink && <span className="subMenuText edit-hyper-link" onClick={this.props.onEditHyperLinkMenuClick}>Edit Hyperlink</span>}
+                        {!!data.saveEditHyperLink && <span className="subMenuText make-hyper-link">Add Hyperlink</span>}
                     </div>
                 </li>
                 <li className="insert-element subContent">
@@ -45,7 +46,7 @@ export default class Menu extends React.Component<Props>{
                     </div>
                     <div className="subMenu">
                         <span className="subMenuText insert-html" onClick={this.props.onAddHTMLMenuClick}>Add HTML</span>
-                        <span className="subMenuText insert-image">Add Image</span>
+                        <span className="subMenuText insert-image" onClick={this.props.onInsertImageMenuClick}>Add Image</span>
                     </div>
                 </li>
                 <li className="edit-style">Edit Style</li>

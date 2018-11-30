@@ -20,6 +20,7 @@ const modalMode = {
     editHyperLink: 'Edit HyperLink',
     editAttr: 'Edit Attribute',
     addHtml: 'Add HTML',
+    insertImage: 'Insert Image',
 };
 
 export default class ABEditor extends React.Component<Props, State> {
@@ -65,7 +66,9 @@ export default class ABEditor extends React.Component<Props, State> {
             editImageLink: '',
             editHyperLink: '',
             editHTML: '',
-            addHtmlPosition: 'elementAfter',
+            addHtmlPosition: 'after',
+            insertImageLink: '',
+            insertImagePosition: 'after',
             selectedElement: {},
             modalMode: null,
         };
@@ -79,25 +82,25 @@ export default class ABEditor extends React.Component<Props, State> {
     };
 
     addMoreAttr = () => {
-        const attrs = this.state.editAttrs.slice();
+        const attrs = this.state.saveEditAttrs.slice();
         attrs.push({attr: '', val: ''});
         this.setState({editAttrs: attrs});
     };
 
     removeAttr = (index) => {
-        const attrs = this.state.editAttrs.slice();
+        const attrs = this.state.saveEditAttrs.slice();
         attrs.splice(index, 1);
         this.setState({editAttrs: attrs});
     };
 
     handleAttrKeyChange = (index, value) => {
-        const attrs = this.state.editAttrs.slice();
+        const attrs = this.state.saveEditAttrs.slice();
         attrs[index] = {...attrs[index], attr: value};
         this.setState({editAttrs: attrs});
     };
 
     handleAttrValueChange = (index, value) => {
-        const attrs = this.state.editAttrs.slice();
+        const attrs = this.state.saveEditAttrs.slice();
         attrs[index] = {...attrs[index], val: value};
         this.setState({editAttrs: attrs});
     };
@@ -243,6 +246,7 @@ export default class ABEditor extends React.Component<Props, State> {
                         onEditHyperLinkMenuClick={this.editHyperLinkElement}
                         onEditAttrMenuClick={this.editAttrElement}
                         onAddHTMLMenuClick={this.addHTMLElement}
+                        onInsertImageMenuClick={this.insertImageElement}
                         top={this.state.menuPositionTop}
                         left={this.state.menuPositionLeft}
                         title={this.state.menuTitle}
@@ -295,7 +299,7 @@ export default class ABEditor extends React.Component<Props, State> {
                     <Button type="primary" onClick={this.addMoreAttr}>Add</Button>
                     <hr/>
                     {
-                        this.state.editAttrs.map((attr, index) => {
+                        this.state.saveEditAttrs.map((attr, index) => {
                             return <div className="d-flex align-items-center mb-2">
                                 <span className="mr-1">Key:</span> <Input className="mr-1" type="text"
                                                                           onChange={(e) => {
@@ -317,10 +321,25 @@ export default class ABEditor extends React.Component<Props, State> {
             }
             case modalMode.addHtml: {
                 return <div>
-                    <TextArea value={state.editHTML} name="editHTML" onChange={this.handleFormChange} rows={8}/>
+                    <Input type="text" name="insertImageLink" onChange={this.handleFormChange} value={state.insertImageLink}/>
                     <hr/>
                     <RadioGroup onChange={this.handleFormChange} name="addHtmlPosition"
                                 value={this.state.addHtmlPosition}>
+                        <Radio value="after">Insert After</Radio>
+                        <Radio value="before">Insert Before</Radio>
+                        <Radio value="append">Insert to the End</Radio>
+                        <Radio value="prepend">Insert to the Beginning</Radio>
+                    </RadioGroup>
+                </div>;
+            }
+
+            case modalMode.insertImage: {
+                return <div>
+                    <h6>Image Hyperlink:</h6>
+                    <Input value={state.insertImageLink} name="insertImageLink" onChange={this.handleFormChange}/>
+                    <hr/>
+                    <RadioGroup onChange={this.handleFormChange} name="insertImagePosition"
+                                value={this.state.insertImagePosition}>
                         <Radio value="after">Insert After</Radio>
                         <Radio value="before">Insert Before</Radio>
                         <Radio value="append">Insert to the End</Radio>
@@ -375,6 +394,13 @@ export default class ABEditor extends React.Component<Props, State> {
         });
     };
 
+    insertImageElement = () => {
+        this.setState({
+            modalVisible: true,
+            modalMode: modalMode.insertImage,
+        });
+    };
+
     handleOk = () => {
         switch (this.state.modalMode) {
             case modalMode.editText: {
@@ -386,43 +412,67 @@ export default class ABEditor extends React.Component<Props, State> {
                 break;
             }
             case modalMode.editHyperLink: {
-                this.setState({
-                    modalVisible: false,
-                    editHyperLink: ''
-                });
-
-                this.setChange({
-                    type: 'editHyperLink',
-                    linkUrl: this.state.editHyperLink,
-                    linkText: this.state.editHyperLink,
-                    newTab: this.state.checkboxNewTab,
-                });
+                this.saveEditHyperLink();
                 break;
             }
             case modalMode.editAttr: {
-                this.setState({
-                    modalVisible: false,
-                });
-                this.setChange({
-                    type: 'elementAttr',
-                    attrs: this.state.editAttrs,
-                });
+                this.saveEditAttrs();
                 break;
             }
             case modalMode.addHtml: {
+                this.saveAddHTML();
+                break;
+            }
+            case modalMode.insertImage: {
                 this.setState({
                     modalVisible: false,
                 });
-
                 this.setChange({
-                    type: 'insertedHTML',
-                    insertOption: this.state.addHtmlPosition,
-                    html: this.state.editHTML
+                    type: 'insertImage',
+                    insertOption: this.state.insertImagePosition,
+                    src: this.state.insertImageLink,
                 });
+                break;
             }
 
         }
     };
+
+    saveAddHTML() {
+        this.setState({
+            modalVisible: false,
+        });
+
+        this.setChange({
+            type: 'insertedHTML',
+            insertOption: this.state.addHtmlPosition,
+            html: this.state.editHTML
+        });
+    }
+
+    saveEditAttrs() {
+        this.setState({
+            modalVisible: false,
+        });
+        this.setChange({
+            type: 'elementAttr',
+            attrs: this.state.saveEditAttrs,
+        });
+    }
+
+    saveEditHyperLink() {
+        this.setState({
+            modalVisible: false,
+            editHyperLink: ''
+        });
+
+        this.setChange({
+            type: 'saveEditHyperLink',
+            linkUrl: this.state.editHyperLink,
+            linkText: this.state.editHyperLink,
+            newTab: this.state.checkboxNewTab,
+        });
+    }
 
     saveImageLink() {
         this.setState({
