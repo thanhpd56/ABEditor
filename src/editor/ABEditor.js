@@ -24,6 +24,7 @@ const modalMode = {
     addHtml: 'Add HTML',
     insertImage: 'Insert Image',
     editStyle: 'Edit Style',
+    editCustomCss: 'Edit Css',
 };
 
 const modeInteractive = 'interactive';
@@ -310,6 +311,7 @@ export default class ABEditor extends React.Component<Props, State> {
             editStyle: {},
             selectedElement: {},
             modalMode: null,
+            customCss: '',
             mode: modeEdit,
         };
     }
@@ -510,7 +512,7 @@ export default class ABEditor extends React.Component<Props, State> {
                                 onClick={this.turnInteractiveMode}><i
                             className="fas fa-mouse-pointer mr-1"/> Interactive Mode</Button>
                         <Button ghost className="mx-3"><i className="fab fa-js  mr-1"/> Javascript</Button>
-                        <Button ghost className="mx-3"><i className="fab fa-css3-alt  mr-1"/> Css</Button>
+                        <Button ghost className="mx-3" onClick={this.editCustomCss}><i className="fab fa-css3-alt  mr-1"/> Css</Button>
                     </div>
                     <iframe id="edit-frame" src="http://localhost:3000" style={{width: '100%', height: '850px'}}/>
 
@@ -653,6 +655,8 @@ export default class ABEditor extends React.Component<Props, State> {
 
                 </Tabs>;
             }
+            case modalMode.editCustomCss:
+                return <TextArea value={state.customCss} name="customCss" onChange={this.handleFormChange} rows={4}/>;
             default:
                 return false;
 
@@ -731,6 +735,14 @@ export default class ABEditor extends React.Component<Props, State> {
         });
     };
 
+    editCustomCss = () => {
+        this.setState({
+            modalVisible: true,
+            modalMode: modalMode.editCustomCss,
+            customCss: this.state.customCss,
+        });
+    };
+
     handleOk = () => {
         switch (this.state.modalMode) {
             case modalMode.editText: {
@@ -772,6 +784,13 @@ export default class ABEditor extends React.Component<Props, State> {
                     type: 'css',
                     settings: this.state.editStyle,
                 });
+                break;
+            }
+            case modalMode.editCustomCss: {
+                this.setState({
+                    modalVisible: false,
+                });
+                pm.send(this.pmTarget, 'injectCSS', {css: this.state.customCss});
                 break;
             }
 
