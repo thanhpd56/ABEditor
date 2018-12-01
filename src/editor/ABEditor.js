@@ -25,6 +25,7 @@ const modalMode = {
     insertImage: 'Insert Image',
     editStyle: 'Edit Style',
     editCustomCss: 'Edit Css',
+    editJavascript: 'Edit Javascript',
 };
 
 const modeInteractive = 'interactive';
@@ -312,6 +313,7 @@ export default class ABEditor extends React.Component<Props, State> {
             selectedElement: {},
             modalMode: null,
             customCss: '',
+            customJs: '',
             mode: modeEdit,
         };
     }
@@ -511,7 +513,7 @@ export default class ABEditor extends React.Component<Props, State> {
                         <Button ghost={this.state.mode !== modeInteractive} type="primary" className="mx-3"
                                 onClick={this.turnInteractiveMode}><i
                             className="fas fa-mouse-pointer mr-1"/> Interactive Mode</Button>
-                        <Button ghost className="mx-3"><i className="fab fa-js  mr-1"/> Javascript</Button>
+                        <Button ghost className="mx-3" onClick={this.editJavascript}><i className="fab fa-js  mr-1"/> Javascript</Button>
                         <Button ghost className="mx-3" onClick={this.editCustomCss}><i className="fab fa-css3-alt  mr-1"/> Css</Button>
                     </div>
                     <iframe id="edit-frame" src="http://localhost:3000" style={{width: '100%', height: '850px'}}/>
@@ -657,6 +659,8 @@ export default class ABEditor extends React.Component<Props, State> {
             }
             case modalMode.editCustomCss:
                 return <TextArea value={state.customCss} name="customCss" onChange={this.handleFormChange} rows={4}/>;
+            case modalMode.editJavascript:
+                return <TextArea value={state.customJs} name="customJs" onChange={this.handleFormChange} rows={4}/>;
             default:
                 return false;
 
@@ -743,6 +747,14 @@ export default class ABEditor extends React.Component<Props, State> {
         });
     };
 
+    editJavascript = () => {
+        this.setState({
+            modalVisible: true,
+            modalMode: modalMode.editJavascript,
+            customJs: this.state.customJs,
+        });
+    };
+
     handleOk = () => {
         switch (this.state.modalMode) {
             case modalMode.editText: {
@@ -791,6 +803,13 @@ export default class ABEditor extends React.Component<Props, State> {
                     modalVisible: false,
                 });
                 pm.send(this.pmTarget, 'injectCSS', {css: this.state.customCss});
+                break;
+            }
+            case modalMode.editJavascript: {
+                this.setState({
+                    modalVisible: false,
+                });
+                pm.send(this.pmTarget, 'injectJS', {js: this.state.customJs});
                 break;
             }
 
