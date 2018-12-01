@@ -286,6 +286,7 @@ export default class ABEditor extends React.Component<Props, State> {
     };
 
     pmTarget = null;
+
     constructor(props) {
         super(props);
         $(document).ready(() => {
@@ -300,6 +301,7 @@ export default class ABEditor extends React.Component<Props, State> {
             menuPositionTop: 0,
             menuPositionLeft: 0,
             customizationList: [],
+            customizationBackupList: [],
             menuTitle: '',
             modalVisible: false,
             editText: '',
@@ -432,7 +434,8 @@ export default class ABEditor extends React.Component<Props, State> {
             return false;
         }
 
-        pm.send(this.pmTarget, setting.function, customization).then(data => {
+        pm.send(this.pmTarget, setting.function, customization).then(event => {
+            const data = event.data;
             if (changeType === 'new') {
                 let list = this.state.customizationList.slice();
                 list.push(data);
@@ -506,15 +509,30 @@ export default class ABEditor extends React.Component<Props, State> {
                         data={this.state.selectedElement}
                     />}
                     {this.state.showOverlay && <div id="selectElementOverlay"/>}
-                    <div className="w-100 bg-dark p-2">
-                        <Button ghost={this.state.mode !== modeEdit} type="primary" className="mx-3"
-                                onClick={this.turnEditMode}><i
-                            className="fas fa-pencil-alt mr-1"/> Edit Mode</Button>
-                        <Button ghost={this.state.mode !== modeInteractive} type="primary" className="mx-3"
-                                onClick={this.turnInteractiveMode}><i
-                            className="fas fa-mouse-pointer mr-1"/> Interactive Mode</Button>
-                        <Button ghost className="mx-3" onClick={this.editJavascript}><i className="fab fa-js  mr-1"/> Javascript</Button>
-                        <Button ghost className="mx-3" onClick={this.editCustomCss}><i className="fab fa-css3-alt  mr-1"/> Css</Button>
+                    <div className="w-100 bg-dark p-2 d-flex">
+                        <div>
+                            <Button ghost={this.state.mode !== modeEdit} type="primary" className="mx-3"
+                                    onClick={this.turnEditMode}><i className="fas fa-pencil-alt mr-1"/> Edit
+                                Mode</Button>
+                            <Button ghost={this.state.mode !== modeInteractive} type="primary" className="mx-3"
+                                    onClick={this.turnInteractiveMode}><i
+                                className="fas fa-mouse-pointer mr-1"/> Interactive Mode</Button>
+                            <Button ghost className="mx-3" onClick={this.editJavascript}><i
+                                className="fab fa-js  mr-1"/> Javascript</Button>
+                            <Button ghost className="mx-3" onClick={this.editCustomCss}><i
+                                className="fab fa-css3-alt  mr-1"/> Css</Button></div>
+                        <div className="ml-auto d-flex">
+                            <Button ghost className="mr-2"
+                                    disabled={this.state.customizationList.length === 0}
+                                    onClick={this.undoLastChange}>
+                                <i className="fas fa-undo"/>
+                            </Button>
+                            <Button ghost className="mr-2"
+                                    disabled={this.state.customizationBackupList.length === 0}
+                                    onClick={this.redoLastChange}>
+                                <i className="fas fa-redo"/>
+                            </Button>
+                        </div>
                     </div>
                     <iframe id="edit-frame" src="http://localhost:3000" style={{width: '100%', height: '850px'}}/>
 
@@ -540,19 +558,22 @@ export default class ABEditor extends React.Component<Props, State> {
 
     getModalBody() {
         const state = this.state;
-        switch (state.modalMode){
+        switch (state.modalMode) {
             case modalMode.editText:
                 return <TextArea value={state.editText} name="editText" onChange={this.handleFormChange} rows={4}/>;
             case modalMode.editImage:
                 return <div>
                     <h4>Image Hyperlink:</h4>
-                    <Input type="text" name="editImageLink" onChange={this.handleFormChange} value={state.editImageLink}/>
+                    <Input type="text" name="editImageLink" onChange={this.handleFormChange}
+                           value={state.editImageLink}/>
                 </div>;
             case modalMode.editHyperLink:
                 return <div>
                     <h4>Link Url:</h4>
-                    <Input type="text" name="editHyperLink" onChange={this.handleFormChange} value={state.editHyperLink}/>
-                    <div className="mt-2"><Checkbox onChange={this.handleCheckboxNewTabChange}> Open new tab</Checkbox></div>
+                    <Input type="text" name="editHyperLink" onChange={this.handleFormChange}
+                           value={state.editHyperLink}/>
+                    <div className="mt-2"><Checkbox onChange={this.handleCheckboxNewTabChange}> Open new tab</Checkbox>
+                    </div>
                 </div>;
             case modalMode.editAttr: {
                 return <div>
@@ -581,7 +602,8 @@ export default class ABEditor extends React.Component<Props, State> {
             }
             case modalMode.addHtml: {
                 return <div>
-                    <Input type="text" name="insertImageLink" onChange={this.handleFormChange} value={state.insertImageLink}/>
+                    <Input type="text" name="insertImageLink" onChange={this.handleFormChange}
+                           value={state.insertImageLink}/>
                     <hr/>
                     <RadioGroup onChange={this.handleFormChange} name="addHtmlPosition"
                                 value={this.state.addHtmlPosition}>
@@ -753,6 +775,25 @@ export default class ABEditor extends React.Component<Props, State> {
             modalMode: modalMode.editJavascript,
             customJs: this.state.customJs,
         });
+    };
+
+    undoLastChange = () => {
+        if (this.state.customizationList.length === 0) {
+            return false;
+        }
+        const lastChange = this.state.customizationList.pop();
+        this.state.customizationBackupList.push(lastChange);
+        pm.send(this.pmTarget, 'undoChange', lastChange);
+    };
+
+
+
+
+    redoLastChange = () => {
+        if (this.state.customizationBackupList.length > 0) {
+            const change = this.state.customizationBackupList.pop();
+            this.applyCustomization(change, 'new');
+        }
     };
 
     handleOk = () => {
