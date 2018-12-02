@@ -12,7 +12,14 @@ const RadioGroup = Radio.Group;
 const TabPane = Tabs.TabPane;
 const Option = Select.Option;
 
-type Props = {}
+type Props = {
+    onCustomizationListChange: Function,
+    onCustomCssChange: Function,
+    onCustomJsChange: Function,
+    customizationList: Array,
+    customCss: string,
+    customJs: string,
+}
 
 type State = {}
 
@@ -300,7 +307,6 @@ export default class ABEditor extends React.Component<Props, State> {
             showOverlay: false,
             menuPositionTop: 0,
             menuPositionLeft: 0,
-            customizationList: [],
             customizationBackupList: [],
             menuTitle: '',
             modalVisible: false,
@@ -314,9 +320,9 @@ export default class ABEditor extends React.Component<Props, State> {
             editStyle: {},
             selectedElement: {},
             modalMode: null,
-            customCss: '',
-            customJs: '',
             mode: modeEdit,
+            tempCustomCss: '',
+            tempCustomJs: '',
         };
     }
 
@@ -437,18 +443,14 @@ export default class ABEditor extends React.Component<Props, State> {
         pm.send(this.pmTarget, setting.function, customization).then(event => {
             const data = event.data;
             if (changeType === 'new') {
-                let list = this.state.customizationList.slice();
+                let list = this.props.customizationList.slice();
                 list.push(data);
-                this.setState({
-                    customizationList: list
-                });
+                this.props.onCustomizationListChange(list);
             }
             else if (changeType === 'update') {
-                let list = this.state.customizationList.slice();
+                let list = this.props.customizationList.slice();
                 list[customIndex] = data;
-                this.setState({
-                    customizationList: list
-                });
+                this.props.onCustomizationListChange(list);
             }
 
             if (typeof setting.closeMenu === 'undefined' || setting.closeMenu === true) {
@@ -523,7 +525,7 @@ export default class ABEditor extends React.Component<Props, State> {
                                 className="fab fa-css3-alt  mr-1"/> Css</Button></div>
                         <div className="ml-auto d-flex">
                             <Button ghost className="mr-2"
-                                    disabled={this.state.customizationList.length === 0}
+                                    disabled={this.props.customizationList.length === 0}
                                     onClick={this.undoLastChange}>
                                 <i className="fas fa-undo"/>
                             </Button>
@@ -558,6 +560,7 @@ export default class ABEditor extends React.Component<Props, State> {
 
     getModalBody() {
         const state = this.state;
+        const props = this.props;
         switch (state.modalMode) {
             case modalMode.editText:
                 return <TextArea value={state.editText} name="editText" onChange={this.handleFormChange} rows={4}/>;
@@ -680,9 +683,15 @@ export default class ABEditor extends React.Component<Props, State> {
                 </Tabs>;
             }
             case modalMode.editCustomCss:
-                return <TextArea value={state.customCss} name="customCss" onChange={this.handleFormChange} rows={4}/>;
+                return <TextArea defaultValue={props.customCss}
+                                 name="tempCustomCss"
+                                 onChange={this.handleFormChange}
+                                 rows={4}/>;
             case modalMode.editJavascript:
-                return <TextArea value={state.customJs} name="customJs" onChange={this.handleFormChange} rows={4}/>;
+                return <TextArea defaultValue={props.customJs}
+                                 name="tempCustomJs"
+                                 onChange={this.handleFormChange}
+                                 rows={4}/>;
             default:
                 return false;
 
@@ -765,7 +774,7 @@ export default class ABEditor extends React.Component<Props, State> {
         this.setState({
             modalVisible: true,
             modalMode: modalMode.editCustomCss,
-            customCss: this.state.customCss,
+            customCss: this.props.customCss,
         });
     };
 
@@ -773,20 +782,18 @@ export default class ABEditor extends React.Component<Props, State> {
         this.setState({
             modalVisible: true,
             modalMode: modalMode.editJavascript,
-            customJs: this.state.customJs,
+            customJs: this.props.customJs,
         });
     };
 
     undoLastChange = () => {
-        if (this.state.customizationList.length === 0) {
+        if (this.props.customizationList.length === 0) {
             return false;
         }
-        const lastChange = this.state.customizationList.pop();
+        const lastChange = this.props.customizationList.pop();
         this.state.customizationBackupList.push(lastChange);
         pm.send(this.pmTarget, 'undoChange', lastChange);
     };
-
-
 
 
     redoLastChange = () => {
@@ -843,14 +850,18 @@ export default class ABEditor extends React.Component<Props, State> {
                 this.setState({
                     modalVisible: false,
                 });
-                pm.send(this.pmTarget, 'injectCSS', {css: this.state.customCss});
+                const css = this.state.tempCustomCss;
+                pm.send(this.pmTarget, 'injectCSS', {css});
+                this.props.onCustomCssChange(css);
                 break;
             }
             case modalMode.editJavascript: {
                 this.setState({
                     modalVisible: false,
                 });
-                pm.send(this.pmTarget, 'injectJS', {js: this.state.customJs});
+                const js = this.state.tempCustomJs;
+                pm.send(this.pmTarget, 'injectJS', {js});
+                this.props.onCustomJsChange(js);
                 break;
             }
 
@@ -920,7 +931,9 @@ export default class ABEditor extends React.Component<Props, State> {
     handleCancel = () => {
         this.setState({
             modalVisible: false,
-            editText: ''
+            editText: '',
+            tempCustomCss: '',
+            tempCustomJs: '',
         });
     };
 }
