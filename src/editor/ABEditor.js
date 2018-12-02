@@ -8,6 +8,7 @@ import Menu from './Menu';
 import {Button, Checkbox, Input, Modal, Radio, Select, Tabs} from 'antd';
 import AddHtmlModal from "./modals/AddHtmlModal";
 import InsertImageModal from "./modals/InsertImageModal";
+import EditStyleModal from "./modals/EditStyleModal";
 
 const {TextArea} = Input;
 const RadioGroup = Radio.Group;
@@ -617,54 +618,9 @@ export default class ABEditor extends React.Component<Props, State> {
                                          insertImagePosition={this.state.insertImagePosition}/>;
             }
             case modalMode.editStyle: {
-                return <Tabs defaultActiveKey="0">
-
-                    {Object.keys(this.cssSettings).map((key, index) => {
-                        const attrs = this.cssSettings[key];
-                        return <TabPane key={index} tab={<span>{key.toUpperCase()}</span>}>
-                            <div className="row">{attrs.map(attr => {
-                                let input;
-                                switch (attr.type) {
-                                    case 'select':
-                                        input = <Select className="col col-md-6 mb-2" style={{width: 120}}
-                                                        onChange={(value) => {
-                                                            this.handleEditStyleFormChange({
-                                                                target: {
-                                                                    name: attr.name,
-                                                                    value
-                                                                }
-                                                            });
-                                                        }}
-                                                        value={this.state.editStyle[attr.name]}>
-                                            {attr.values.map(value => {
-                                                return <Option value={value}>{value}</Option>;
-                                            })}
-                                        </Select>;
-                                        break;
-                                    default:
-                                        input = <Input className="col col-md-6 mb-2"
-                                                       type={attr.type}
-                                                       name={attr.name}
-                                                       value={this.state.editStyle[attr.name]}
-                                                       onChange={this.handleEditStyleFormChange}
-                                        />;
-                                }
-
-
-                                return <div className="col col-md-6">
-                                    <div className="d-flex row">
-                                        <span className="col col-md-6">{attr.label}</span>
-                                        {
-                                            input
-                                        }
-
-                                    </div>
-                                </div>;
-                            })}</div>
-                        </TabPane>;
-                    })}
-
-                </Tabs>;
+                return <EditStyleModal onFormChange={this.handleFormChange}
+                                       onEditStyleFormChange={this.handleEditStyleFormChange}
+                                       editStyle={this.state.editStyle}/>;
             }
             case modalMode.editCustomCss:
                 return <TextArea defaultValue={props.customCss}
