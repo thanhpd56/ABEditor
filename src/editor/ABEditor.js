@@ -7,6 +7,7 @@ import './css/elementHandler.css';
 import Menu from './Menu';
 import {Button, Checkbox, Input, Modal, Radio, Select, Tabs} from 'antd';
 import AddHtmlModal from "./modals/AddHtmlModal";
+import InsertImageModal from "./modals/InsertImageModal";
 
 const {TextArea} = Input;
 const RadioGroup = Radio.Group;
@@ -611,18 +612,9 @@ export default class ABEditor extends React.Component<Props, State> {
             }
 
             case modalMode.insertImage: {
-                return <div>
-                    <h6>Image Hyperlink:</h6>
-                    <Input value={state.insertImageLink} name="insertImageLink" onChange={this.handleFormChange}/>
-                    <hr/>
-                    <RadioGroup onChange={this.handleFormChange} name="insertImagePosition"
-                                value={this.state.insertImagePosition}>
-                        <Radio value="after">Insert After</Radio>
-                        <Radio value="before">Insert Before</Radio>
-                        <Radio value="append">Insert to the End</Radio>
-                        <Radio value="prepend">Insert to the Beginning</Radio>
-                    </RadioGroup>
-                </div>;
+                return <InsertImageModal onFormChange={this.handleFormChange}
+                                         insertImageLink={this.state.insertImageLink}
+                                         insertImagePosition={this.state.insertImagePosition}/>;
             }
             case modalMode.editStyle: {
                 return <Tabs defaultActiveKey="0">
