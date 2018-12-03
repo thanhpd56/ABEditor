@@ -5,11 +5,13 @@ import pm from 'post-robot';
 import './css/actionBuilder.css';
 import './css/elementHandler.css';
 import Menu from './Menu';
-import {Button, Checkbox, Input, Modal, Radio, Select, Tabs} from 'antd';
+import {Button, Input, Modal, Radio, Select, Tabs} from 'antd';
 import AddHtmlModal from "./modals/AddHtmlModal";
 import InsertImageModal from "./modals/InsertImageModal";
 import EditStyleModal from "./modals/EditStyleModal";
 import EditAttrModal from './modals/EditAttrModal';
+import EditHyperLinkModal from './modals/EditHyperLinkModal';
+import EditImageLinkModal from './modals/EditImageLinkModal';
 
 const {TextArea} = Input;
 const RadioGroup = Radio.Group;
@@ -322,6 +324,7 @@ export default class ABEditor extends React.Component<Props, State> {
             insertImageLink: '',
             insertImagePosition: 'after',
             editStyle: {},
+            editAttrs: [],
             selectedElement: {},
             modalMode: null,
             mode: modeEdit,
@@ -346,26 +349,41 @@ export default class ABEditor extends React.Component<Props, State> {
     };
 
     addMoreAttr = () => {
-        const attrs = this.state.saveEditAttrs.slice();
-        attrs.push({attr: '', val: ''});
+        const attrs = this.state.editAttrs.slice();
+        attrs.push({type: 'added', key: '', val: ''});
         this.setState({editAttrs: attrs});
     };
 
     removeAttr = (index) => {
-        const attrs = this.state.saveEditAttrs.slice();
-        attrs.splice(index, 1);
+        const attrs = this.state.editAttrs.slice();
+        const item = attrs[index];
+        if (item.type === 'added') {
+            attrs.splice(index, 1);
+        } else {
+            attrs[index] = {...item, type: 'deleted'}
+        }
         this.setState({editAttrs: attrs});
     };
 
     handleAttrKeyChange = (index, value) => {
-        const attrs = this.state.saveEditAttrs.slice();
-        attrs[index] = {...attrs[index], attr: value};
+        const attrs = this.state.editAttrs.slice();
+        const item = attrs[index];
+        if (item.type === 'added') {
+            attrs[index] = {...item, key: value}
+        } else {
+            attrs[index] = {...item, type: 'changed', key: value}
+        }
         this.setState({editAttrs: attrs});
     };
 
     handleAttrValueChange = (index, value) => {
-        const attrs = this.state.saveEditAttrs.slice();
-        attrs[index] = {...attrs[index], val: value};
+        const attrs = this.state.editAttrs.slice();
+        const item = attrs[index];
+        if (item.type === 'added') {
+            attrs[index] = {...item, val: value}
+        } else {
+            attrs[index] = {...item, type: 'changed', val: value}
+        }
         this.setState({editAttrs: attrs});
     };
 
@@ -569,19 +587,11 @@ export default class ABEditor extends React.Component<Props, State> {
             case modalMode.editText:
                 return <TextArea value={state.editText} name="editText" onChange={this.handleFormChange} rows={4}/>;
             case modalMode.editImage:
-                return <div>
-                    <h4>Image Hyperlink:</h4>
-                    <Input type="text" name="editImageLink" onChange={this.handleFormChange}
-                           value={state.editImageLink}/>
-                </div>;
+                return <EditImageLinkModal onFormChange={this.handleFormChange} editImageLink={this.state.editImage}/>;
             case modalMode.editHyperLink:
-                return <div>
-                    <h4>Link Url:</h4>
-                    <Input type="text" name="editHyperLink" onChange={this.handleFormChange}
-                           value={state.editHyperLink}/>
-                    <div className="mt-2"><Checkbox onChange={this.handleCheckboxNewTabChange}> Open new tab</Checkbox>
-                    </div>
-                </div>;
+                return <EditHyperLinkModal onFormChange={this.handleFormChange}
+                                           onCheckboxNewTabChange={this.handleCheckboxNewTabChange}
+                                           editHyperLink={this.state.editHyperLink}/>;
             case modalMode.editAttr: {
                 return <EditAttrModal removeAttr={this.removeAttr} addMoreAttr={this.addMoreAttr}
                                       handleAttrKeyChange={this.handleAttrKeyChange}
@@ -648,7 +658,7 @@ export default class ABEditor extends React.Component<Props, State> {
     editAttrElement = () => {
         this.setState({
             modalVisible: true,
-            editAttrs: this.state.selectedElement.attrs,
+            editAttrs: this.state.selectedElement.attrs.map(attr => ({key: attr.attr, val: attr.val})),
             modalMode: modalMode.editAttr,
         });
     };
@@ -808,7 +818,7 @@ export default class ABEditor extends React.Component<Props, State> {
         });
         this.setChange({
             type: 'elementAttr',
-            attrs: this.state.saveEditAttrs,
+            attrs: this.state.editAttrs,
         });
     }
 

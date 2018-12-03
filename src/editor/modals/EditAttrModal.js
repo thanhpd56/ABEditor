@@ -15,16 +15,16 @@ export default class EditAttrModal extends React.Component<Props> {
     render() {
         return (
             <div>
-                <Button type="primary" onClick={this.addMoreAttr}>Add</Button>
+                <Button type="primary" onClick={this.props.addMoreAttr}>Add</Button>
                 <hr/>
                 {
-                    this.props.editAttrs.map((attr, index) => {
+                    this.props.editAttrs.filter(attr => attr.type !== 'deleted').map((attr, index) => {
                         return <div className="d-flex align-items-center mb-2">
                             <span className="mr-1">Key:</span> <Input className="mr-1" type="text"
                                                                       onChange={(e) => {
                                                                           this.props.handleAttrKeyChange(index, e.target.value);
                                                                       }}
-                                                                      value={attr.attr}/>
+                                                                      value={attr.key}/>
                             <span className="mr-1">Value:</span> <Input className="mr-1" type="text"
                                                                         onChange={(e) => {
                                                                             this.props.handleAttrValueChange(index, e.target.value);
