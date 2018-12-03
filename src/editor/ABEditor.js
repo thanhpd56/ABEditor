@@ -9,6 +9,7 @@ import {Button, Checkbox, Input, Modal, Radio, Select, Tabs} from 'antd';
 import AddHtmlModal from "./modals/AddHtmlModal";
 import InsertImageModal from "./modals/InsertImageModal";
 import EditStyleModal from "./modals/EditStyleModal";
+import EditAttrModal from './modals/EditAttrModal';
 
 const {TextArea} = Input;
 const RadioGroup = Radio.Group;
@@ -582,29 +583,10 @@ export default class ABEditor extends React.Component<Props, State> {
                     </div>
                 </div>;
             case modalMode.editAttr: {
-                return <div>
-                    <Button type="primary" onClick={this.addMoreAttr}>Add</Button>
-                    <hr/>
-                    {
-                        this.state.saveEditAttrs.map((attr, index) => {
-                            return <div className="d-flex align-items-center mb-2">
-                                <span className="mr-1">Key:</span> <Input className="mr-1" type="text"
-                                                                          onChange={(e) => {
-                                                                              this.handleAttrKeyChange(index, e.target.value);
-                                                                          }}
-                                                                          value={attr.attr}/>
-                                <span className="mr-1">Value:</span> <Input className="mr-1" type="text"
-                                                                            onChange={(e) => {
-                                                                                this.handleAttrValueChange(index, e.target.value);
-                                                                            }}
-                                                                            value={attr.val}/>
-                                <Button type="danger" onClick={() => {
-                                    this.removeAttr(index);
-                                }}><i className="fas fa-trash-alt"/></Button>
-                            </div>;
-                        })
-                    }
-                </div>;
+                return <EditAttrModal removeAttr={this.removeAttr} addMoreAttr={this.addMoreAttr}
+                                      handleAttrKeyChange={this.handleAttrKeyChange}
+                                      handleAttrValueChange={this.handleAttrValueChange}
+                                      editAttrs={this.state.editAttrs}/>;
             }
             case modalMode.addHtml: {
                 return <AddHtmlModal editHTML={this.state.editHTML}
