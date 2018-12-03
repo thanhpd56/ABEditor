@@ -94,8 +94,8 @@ export default class ABEditor extends React.Component<Props, State> {
             selectedElement: {},
             modalMode: null,
             mode: modeEdit,
-            tempCustomCss: '',
-            tempCustomJs: '',
+            tempCustomCss: props.customCss || '',
+            tempCustomJs: props.customJs || '',
         };
     }
 
@@ -348,7 +348,6 @@ export default class ABEditor extends React.Component<Props, State> {
 
     getModalBody() {
         const state = this.state;
-        const props = this.props;
         switch (state.modalMode) {
             case modalMode.editText:
                 return <TextArea value={state.editText} name="editText" onChange={this.handleFormChange} rows={4}/>;
@@ -381,12 +380,12 @@ export default class ABEditor extends React.Component<Props, State> {
                                        editStyle={this.state.editStyle}/>;
             }
             case modalMode.editCustomCss:
-                return <TextArea defaultValue={props.customCss}
+                return <TextArea value={state.tempCustomCss}
                                  name="tempCustomCss"
                                  onChange={this.handleFormChange}
                                  rows={4}/>;
             case modalMode.editJavascript:
-                return <TextArea defaultValue={props.customJs}
+                return <TextArea value={state.tempCustomJs}
                                  name="tempCustomJs"
                                  onChange={this.handleFormChange}
                                  rows={4}/>;
